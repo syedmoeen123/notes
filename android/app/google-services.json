@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "972593813610",
+    "project_id": "my-moeen-notes",
+    "storage_bucket": "my-moeen-notes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972593813610:android:9f17c1524d3f9878d85213",
+        "android_client_info": {
+          "package_name": "ahmed.moeen.notes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC00ysVxhImG9wk690fEJzJkjmn5bRFky8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
