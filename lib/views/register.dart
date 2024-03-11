@@ -31,68 +31,61 @@ class _register_viewState extends State<register_view> {
 
     return Scaffold(
       appBar: AppBar(
-
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-        title: Text("registration screen"),
+        title: Text("register screen"),
       ),
-      body: FutureBuilder(
-        future:  Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,),
-        builder:(context,snapshot){
-          return Column(
+      body: Column(
 
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(controller:_email,
-                  decoration: InputDecoration(
-                    hintText: 'neverlosehope38@gmail.com',
-                    border: OutlineInputBorder(),
-                  ),),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(controller: _password,
-                  decoration: InputDecoration(
-                    hintText: 'enter your password',
-                    border: OutlineInputBorder(),
-                  ),),
-              ),
-              TextButton(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(controller:_email,
+              decoration: InputDecoration(
+                hintText: 'neverlosehope38@gmail.com',
+                border: OutlineInputBorder(),
+              ),),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(controller: _password,
+              decoration: InputDecoration(
+                hintText: 'enter your password',
+                border: OutlineInputBorder(),
+              ),),
+          ),
+          TextButton(
 
-                onPressed: () async{
-                  Firebase.initializeApp(
-                      options: DefaultFirebaseOptions.currentPlatform
-                  );
-                  final email = _email.text;
-                  final password=_password.text;
-                  try{
-                    final credentials=await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                        email: email,
-                        password: password);
-                  }on FirebaseAuthException catch(e){
-                   if(e.code=="email-already-in-use"){
-                     print("email already taken");
-                   }
-                   else if(e.code=="invalid-email"){
-                     print("invalid-email");
-                   }
-                   else{
-                     print(e.code);
-                   }
-                  }
+            onPressed: () async{
+              Firebase.initializeApp(
+                  options: DefaultFirebaseOptions.currentPlatform
+              );
+              final email = _email.text;
+              final password=_password.text;
+              try{
+                final credentials=await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                    email: email,
+                    password: password);
+              }on FirebaseAuthException catch(e){
+                if(e.code=="email-already-in-use"){
+                  print("email already taken");
+                }
+                else if(e.code=="invalid-email"){
+                  print("invalid-email");
+                }
+                else{
+                  print(e.code);
+                }
+              }
 
 
-                },
-                child: Text('Register'),
-              )
-            ],
-          );
-        }
-        ,
+            },
+            child: Text('Register'),
+          ),
+          TextButton(onPressed: (){
+            Navigator.of(context).pushNamedAndRemoveUntil("/login/", (route) => false);
+          },
+              child:Text("already registered, login here") )
+        ],
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
