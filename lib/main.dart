@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:notes/email_verification.dart';
 import 'package:notes/firebase_options.dart';
+import 'package:notes/views/Notes_view.dart';
 import 'package:notes/views/login.dart';
 import 'package:notes/views/register.dart';
+import 'dart:developer'as dev_tool show log;
 
 
 void main() {
@@ -26,8 +28,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: Home_page(),
-      routes: {"/login/":(context)=>login_view(),
-        "/register/":(context)=>register_view(),
+      routes: {"/login/":(context)=>const login_view(),
+        "/register/":(context)=>const register_view(),
+        "/notes/":(context)=>const Notes_view(),
       },
     );
   }
@@ -56,7 +59,7 @@ class Home_page extends StatelessWidget {
             }else{
               return const login_view();
             }
-            return Text("done");
+            return const Notes_view();
           default:
             return Text("waiting");
 
@@ -68,10 +71,6 @@ class Home_page extends StatelessWidget {
 
   }
 }
-
-
-
-
 
 
 
