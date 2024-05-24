@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
       routes: {"/login/":(context)=>const login_view(),
         "/register/":(context)=>const register_view(),
         "/notes/":(context)=>const Notes_view(),
+        "/email_verification/":(context)=>const Email_verification(),
       },
     );
   }

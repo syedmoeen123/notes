@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:notes/firebase_options.dart';
+import 'package:notes/views/login.dart';
 
 class register_view extends StatefulWidget {
   const register_view({super.key,});
@@ -64,16 +65,22 @@ class _register_viewState extends State<register_view> {
                 final credentials=await FirebaseAuth.instance.createUserWithEmailAndPassword(
                     email: email,
                     password: password);
+                var user=FirebaseAuth.instance.currentUser;
+                user?.sendEmailVerification();
+                Navigator.of(context).pushNamed("/email_verification/");
+
               }on FirebaseAuthException catch(e){
                 if(e.code=="email-already-in-use"){
-                  print("email already taken");
+                  showerrordialog(context, "email-already-in-use");
                 }
                 else if(e.code=="invalid-email"){
-                  print("invalid-email");
+                  showerrordialog(context, "invalid-email");
                 }
                 else{
-                  print(e.code);
+                  showerrordialog(context, "Error: ${e.code}");
                 }
+              }catch(e){
+                showerrordialog(context, "Error: ${e.toString()}");
               }
 
 

@@ -52,15 +52,24 @@ class _login_viewState extends State<login_view> {
                 final credentials=await FirebaseAuth.instance.signInWithEmailAndPassword(
                     email: email,
                     password: password);
-                Navigator.of(context).pushNamedAndRemoveUntil('/notes/', (route) => false);
-              }on FirebaseAuthException catch(e){
-                if(e.code=="INVALID_LOGIN_CREDENTIALS"){
-                  devtools.log("INVALID_LOGIN_CREDENTIALS");
+                final user=FirebaseAuth.instance.currentUser;
+                if(user?.emailVerified??false){
+                  Navigator.of(context).pushNamedAndRemoveUntil('/notes/', (route) => false);
                 }
                 else{
-                  devtools.log(e.code);
+                  Navigator.of(context).pushNamedAndRemoveUntil('/email_verification/', (route) => false);
                 }
 
+              }on FirebaseAuthException catch(e){
+                if(e.code=="INVALID_LOGIN_CREDENTIALS"){
+                  showerrordialog(context, "INVALID_LOGIN_CREDENTIALS");
+                }
+                else{
+                  showerrordialog(context, "error: ${e.code}");
+                }
+
+              }catch(e){
+                showerrordialog(context, e.toString(),);
               }
 
 
@@ -77,4 +86,15 @@ class _login_viewState extends State<login_view> {
       ),
     );
   }
+}
+Future<void> showerrordialog(BuildContext context,String text){
+  return  showDialog(context: context, builder: (context){
+    return AlertDialog(
+      title: const Text("An error occured"),
+      content: Text(text),
+      actions: [
+        TextButton(onPressed: (){}, child: const Text("OK"))
+      ],
+    );
+  });
 }

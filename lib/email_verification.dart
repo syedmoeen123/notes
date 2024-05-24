@@ -16,13 +16,23 @@ class _Email_verificationState extends State<Email_verification> {
       appBar: AppBar(
         title: Text('Email verification'),
       ),
-      body: TextButton(
-        onPressed: (){
-          final user= FirebaseAuth.instance.currentUser;
-          user?.sendEmailVerification();
-        },
-        child: Text("send verification email"),
-      ),
+      body:
+
+      Column(
+        children:<Widget> [
+          Text("we have sent you an email for verification "),
+          Text("if you have not received the verification email click the button below"),
+          TextButton(onPressed: (){
+            var user=FirebaseAuth.instance.currentUser;
+            user?.sendEmailVerification();
+          }, child: Text("send email"),
+          ),
+          TextButton(onPressed: (){
+            Navigator.of(context).pushNamedAndRemoveUntil("/login/", (route) => false);
+
+          }, child: Text("restart"))
+        ],
+      )
 
     );
   }
